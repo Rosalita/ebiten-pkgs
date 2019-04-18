@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.10 
-    working_directory: /go/src/github.com/thingco/models
+    working_directory: /go/src/github.com/Rosalita/ebiten-pkgs
     steps:
       - checkout
       - run: go test -v -cover ./...
