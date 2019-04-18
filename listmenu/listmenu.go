@@ -12,7 +12,12 @@ import (
 	"golang.org/x/image/font"
 )
 
-var mplusNormalFont font.Face
+var (
+	mplusNormalFont font.Face
+	white           = &color.NRGBA{0x00, 0xff, 0xff, 0xff}
+	black           = &color.NRGBA{0x00, 0x00, 0x00, 0xff}
+	magenta         = &color.NRGBA{0xff, 0x00, 0xff, 0xff}
+)
 
 func init() {
 	tt, err := truetype.Parse(fonts.MPlus1pRegular_ttf)
@@ -67,7 +72,7 @@ type Input struct {
 	Offy                float64      // optional, offset of subsequent menu items, if not provided will be menu item height
 	DefaultBgColour     *color.NRGBA // optional, default background colour of menu, if not provided will be cyan
 	DefaultTxtColour    *color.NRGBA // optional, default text colour, if not provided will be black
-	DefaultSelBGColour  *color.NRGBA // optional, default selected background colour of menu, if not provided will be magenta
+	DefaultSelBgColour  *color.NRGBA // optional, default selected background colour of menu, if not provided will be magenta
 	DefaultSelTxtColour *color.NRGBA //optional, default selected text colour of menu, if not provided it will be white
 	Items               []Item       // mandtory, list of menu items
 }
@@ -90,19 +95,19 @@ func NewMenu(input Input) (ListMenu, error) {
 	}
 
 	if input.DefaultBgColour == nil {
-		input.DefaultBgColour = &color.NRGBA{0x00, 0xff, 0xff, 0xff}
+		input.DefaultBgColour = white
 	}
 
 	if input.DefaultTxtColour == nil {
-		input.DefaultTxtColour = &color.NRGBA{0x00, 0x00, 0x00, 0xff}
+		input.DefaultTxtColour = black
 	}
 
-	if input.DefaultSelBGColour == nil {
-		input.DefaultSelBGColour = &color.NRGBA{0xff, 0x00, 0xff, 0xff}
+	if input.DefaultSelBgColour == nil {
+		input.DefaultSelBgColour = magenta
 	}
 
 	if input.DefaultSelTxtColour == nil {
-		input.DefaultSelTxtColour = &color.NRGBA{0xff, 0xff, 0xff, 0xff}
+		input.DefaultSelTxtColour = white
 	}
 
 	defaultSelectedIndex := 0
@@ -116,7 +121,7 @@ func NewMenu(input Input) (ListMenu, error) {
 		Offy:                input.Offy,
 		DefaultBgColour:     input.DefaultBgColour,
 		DefaultTxtColour:    input.DefaultTxtColour,
-		DefaultSelBgColour:  input.DefaultSelBGColour,
+		DefaultSelBgColour:  input.DefaultSelBgColour,
 		DefaultSelTxtColour: input.DefaultSelTxtColour,
 		SelectedIndex:       &defaultSelectedIndex,
 		Items:               input.Items,

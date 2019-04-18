@@ -33,10 +33,8 @@ func TestCharListToCharGrid(t *testing.T) {
 	}
 
 	for _, test := range tests {
-
 		result := charListToCharGrid(test.charList, test.lineLength)
 		assert.Equal(t, test.result, result)
-
 	}
 }
 
