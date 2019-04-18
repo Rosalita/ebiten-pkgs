@@ -8,4 +8,5 @@ jobs:
     working_directory: /go/src/github.com/Rosalita/ebiten-pkgs
     steps:
       - checkout
+      - run: sudo apt install libc6-dev libglu1-mesa-dev libgles2-mesa-dev libxrandr-dev libxcursor-dev libxinerama-dev libxi-dev libasound2-dev
       - run: go test -v -cover ./...
