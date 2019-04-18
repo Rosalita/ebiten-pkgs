@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.10 
+    working_directory: /go/src/github.com/thingco/models
+    steps:
+      - checkout
+      - run: go vet ./...
+      - run: go test -v -cover ./...
