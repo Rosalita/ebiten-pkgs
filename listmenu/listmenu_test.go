@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"testing"
 
-	lm "github.com/Rosalita/my-ebiten/pkgs/listmenu"
+	lm "github.com/Rosalita/ebiten-pkgs/listmenu"
 	"github.com/stretchr/testify/assert"
 )
 
