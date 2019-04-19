@@ -3,8 +3,8 @@ package main
 import (
 	"image/color"
 
-	im "github.com/Rosalita/my-ebiten/pkgs/imagemenu"
-	"github.com/Rosalita/my-ebiten/resources/ui"
+	im "github.com/Rosalita/ebiten-pkgs/imagemenu"
+	"github.com/Rosalita/my-ebiten-examples/resources/ui"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil" // This is required to draw debug texts.
 	"github.com/hajimehoshi/ebiten/inpututil"  // required for isKeyJustPressed

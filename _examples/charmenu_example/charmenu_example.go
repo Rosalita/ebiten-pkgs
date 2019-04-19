@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil" // This is required to draw debug texts.
 	"github.com/hajimehoshi/ebiten/inpututil"  // required for isKeyJustPressed
 
-	cm "github.com/Rosalita/my-ebiten/pkgs/charmenu"
+	cm "github.com/Rosalita/ebiten-pkgs/charmenu"
 
 )
 

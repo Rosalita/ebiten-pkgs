@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"image/color"
 
-	lm "github.com/Rosalita/my-ebiten/pkgs/listmenu"
+	lm "github.com/Rosalita/ebiten-pkgs/listmenu"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil" // This is required to draw debug texts.
 	"github.com/hajimehoshi/ebiten/inpututil"  // required for isKeyJustPressed
@@ -72,7 +72,7 @@ func main() {
 		Tx:                 24,
 		Ty:                 24,
 		Offy:               40,
-		DefaultSelBGColour: pink,
+		DefaultSelBgColour: pink,
 		Items:              menuItems,
 	}
 
