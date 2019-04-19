@@ -62,7 +62,7 @@ type ListMenu struct {
 	Items               []Item       // menu items
 }
 
-// Input is an object used to create a menu list
+// Input is an object used to create a list menu
 type Input struct {
 	Tx                  float64      // optional, x translation of the menu, if not provided will be 0
 	Ty                  float64      // optional, y translation of the menu, if not provided will be 0

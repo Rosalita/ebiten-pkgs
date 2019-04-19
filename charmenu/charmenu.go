@@ -52,7 +52,7 @@ type CharMenu struct {
 	CharGrid            [][]CharItem
 }
 
-// Input is an object used to create an alpha list
+// Input is an object used to create a new Char Menu
 type Input struct {
 	Tx                  float64      // optional, x translation of the menu, if not provided will be 0
 	Ty                  float64      // optional, y translation of the menu, if not provided will be 0
@@ -62,7 +62,7 @@ type Input struct {
 	DefaultSelTxtColour *color.NRGBA //optional, default selected text colour of menu, if not provided it will be white
 }
 
-//NewMenu constructs a new alpha menu from a Input
+//NewMenu constructs a new char menu from a Input
 func NewMenu(input Input) (CharMenu, error) {
 
 	if input.DefaultBgColour == nil {
@@ -114,7 +114,7 @@ func NewMenu(input Input) (CharMenu, error) {
 	return m, nil
 }
 
-//Draw draws the list menu to the screen
+//Draw draws the char menu to the screen
 func (m *CharMenu) Draw(screen *ebiten.Image) {
 
 	opts := &ebiten.DrawImageOptions{}
