@@ -16,7 +16,6 @@ var (
 )
 
 func TestNewMenu(t *testing.T) {
-	// try create a new menu with missing values width, height, items
 
 	validItems := []lm.Item{
 		{Name: "playButton",
@@ -36,35 +35,75 @@ func TestNewMenu(t *testing.T) {
 			BgColour: white},
 	}
 
-	missingWidth := lm.Input{
-		Height: 30,
-		Items:  validItems,
+	validInput := lm.Input{
+		Width:      100,
+		ItemHeight: 40,
+		Items:      validItems,
 	}
 
-	missingHeight := lm.Input{
+	missingWidth := lm.Input{
+		ItemHeight: 30,
+		Items:      validItems,
+	}
+
+	missingItemHeight := lm.Input{
 		Width: 50,
 		Items: validItems,
 	}
 
 	missingItems := lm.Input{
-		Height: 30,
-		Width:  50,
+		ItemHeight: 30,
+		Width:      50,
+	}
+
+	expectedMenu := lm.ListMenu{
+		Tx:         0,
+		Ty:         0,
+		Width:      100,
+		ItemHeight: 40,
+		Height:     200,
+		Offx:       0,
+		Offy:       40,
+		Items: []lm.Item{
+			{
+				Name: "playButton",
+				Text: "PLAY",
+				TxtX: 40,
+				TxtY: 25,
+			},
+			{
+				Name: "optionButton",
+				Text: "OPTIONS",
+				TxtX: 16,
+				TxtY: 25,
+			},
+			{
+				Name: "quitButton",
+				Text: "QUIT",
+				TxtX: 40,
+				TxtY: 25,
+			},
+		},
 	}
 
 	tests := []struct {
-		input lm.Input
-		menu  lm.ListMenu
-		err   error
+		input        lm.Input
+		expectedMenu lm.ListMenu
+		err          error
 	}{
-		{missingWidth, lm.ListMenu{}, errors.New("Mandatory input field width is missing")},
-		{missingHeight, lm.ListMenu{}, errors.New("Mandatory input field height is missing")},
-		{missingItems, lm.ListMenu{}, errors.New("Mandatory input field MenuItems is missing")},
+		{validInput, expectedMenu, nil},
+		{missingWidth, lm.ListMenu{}, errors.New("Mandatory input field Width is missing")},
+		{missingItemHeight, lm.ListMenu{}, errors.New("Mandatory input field ItemHeight is missing")},
+		{missingItems, lm.ListMenu{}, errors.New("Mandatory input field Items is missing")},
 	}
 
 	for _, test := range tests {
 		result, err := lm.NewMenu(test.input)
-		assert.Equal(t, test.menu, result)
+		assert.Equal(t, test.expectedMenu.Width, result.Width)
+		assert.Equal(t, test.expectedMenu.ItemHeight, result.ItemHeight)
+		assert.Equal(t, test.expectedMenu.Height, result.Height)
+		assert.Equal(t, test.expectedMenu.Offy, result.Offy)
+		assert.Equal(t, len(test.expectedMenu.Items), len(result.Items))
 		assert.Equal(t, test.err, err)
 	}
-
 }

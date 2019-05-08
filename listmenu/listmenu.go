@@ -51,7 +51,8 @@ type ListMenu struct {
 	Tx                  float64      // x translation of the menu
 	Ty                  float64      // y translation of the menu
 	Width               int          // width of all menu items
-	Height              int          // height of all menu items
+	ItemHeight          int          // height of each item in the menu
+	Height              int          // height of entire menu
 	Offx                float64      // x offset of subsequent menu items
 	Offy                float64      // y offset of subsequent menu items
 	DefaultBgColour     *color.NRGBA // default background colour
@@ -66,8 +67,8 @@ type ListMenu struct {
 type Input struct {
 	Tx                  float64      // optional, x translation of the menu, if not provided will be 0
 	Ty                  float64      // optional, y translation of the menu, if not provided will be 0
-	Width               int          // mandatory, width of all menu items
-	Height              int          // mandatory, height of all menu items
+	Width               int          // mandatory, width of every menu item
+	ItemHeight          int          // mandatory, height of every menu item
 	Offx                float64      // optional, offset of subsequent menu items, if not provided will 0
 	Offy                float64      // optional, offset of subsequent menu items, if not provided will be menu item height
 	DefaultBgColour     *color.NRGBA // optional, default background colour of menu, if not provided will be cyan
@@ -81,17 +82,17 @@ type Input struct {
 func NewMenu(input Input) (ListMenu, error) {
 
 	if input.Width == 0 {
-		return ListMenu{}, errors.New("Mandatory input field width is missing")
+		return ListMenu{}, errors.New("Mandatory input field Width is missing")
 	}
-	if input.Height == 0 {
-		return ListMenu{}, errors.New("Mandatory input field height is missing")
+	if input.ItemHeight == 0 {
+		return ListMenu{}, errors.New("Mandatory input field ItemHeight is missing")
 	}
 	if len(input.Items) < 1 {
-		return ListMenu{}, errors.New("Mandatory input field MenuItems is missing")
+		return ListMenu{}, errors.New("Mandatory input field Items is missing")
 	}
 
 	if input.Offy == 0 {
-		input.Offy = float64(input.Height)
+		input.Offy = float64(input.ItemHeight)
 	}
 
 	if input.DefaultBgColour == nil {
@@ -112,11 +113,17 @@ func NewMenu(input Input) (ListMenu, error) {
 
 	defaultSelectedIndex := 0
 
+	numItems := len(input.Items)
+	numOffsets := len(input.Items) - 1
+
+	menuHeight := (numItems * input.ItemHeight) + (numOffsets * int(input.Offy))
+
 	m := ListMenu{
 		Tx:                  input.Tx,
 		Ty:                  input.Ty,
 		Width:               input.Width,
-		Height:              input.Height,
+		ItemHeight:          input.ItemHeight,
+		Height:              menuHeight,
 		Offx:                input.Offx,
 		Offy:                input.Offy,
 		DefaultBgColour:     input.DefaultBgColour,
@@ -154,14 +161,14 @@ func NewMenu(input Input) (ListMenu, error) {
 		}
 
 		if item.TxtY == 0 {
-			m.Items[i].TxtY = m.Height - 5 // default value for text y height
+			m.Items[i].TxtY = m.ItemHeight - 5 // default value for text y height
 		}
 
 	}
 
 	// initialise images for each menu item
 	for i := range m.Items {
-		newImage, _ := ebiten.NewImage(m.Width, m.Height, ebiten.FilterNearest)
+		newImage, _ := ebiten.NewImage(m.Width, m.ItemHeight, ebiten.FilterNearest)
 		m.Items[i].image = newImage
 	}
 	return m, nil
