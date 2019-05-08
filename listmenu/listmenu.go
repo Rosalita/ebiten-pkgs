@@ -200,11 +200,15 @@ func (m *ListMenu) Draw(screen *ebiten.Image) {
 
 	opts := &ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(m.Tx, m.Ty)
+	// To Do: use scaling for different display resolutions
+	//opts.GeoM.Scale(1, 1) 
 
 	for index, item := range m.Items {
 
 		if index == *m.SelectedIndex {
 			item.image.Fill(item.SelBgColour)
+
+			
 		} else {
 			item.image.Fill(item.BgColour)
 		}
