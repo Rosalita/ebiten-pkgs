@@ -61,6 +61,7 @@ type ListMenu struct {
 	DefaultSelTxtColour *color.NRGBA // default selected text colour
 	SelectedIndex       *int         // index of the item in list which is selected
 	Items               []Item       // menu items
+	Scale               *float64     // used to scale the the whole menu when drawn, 1.0 full size, 0.5 half size
 }
 
 // Input is an object used to create a list menu
@@ -112,6 +113,7 @@ func NewMenu(input Input) (ListMenu, error) {
 	}
 
 	defaultSelectedIndex := 0
+	defaultScale := 1.0
 
 	numItems := len(input.Items)
 	numOffsets := len(input.Items) - 1
@@ -132,6 +134,7 @@ func NewMenu(input Input) (ListMenu, error) {
 		DefaultSelTxtColour: input.DefaultSelTxtColour,
 		SelectedIndex:       &defaultSelectedIndex,
 		Items:               input.Items,
+		Scale:               &defaultScale,
 	}
 
 	// set override colours if needed otherwise use default colours
@@ -195,20 +198,27 @@ func (m *ListMenu) DecrementSelected() {
 	}
 }
 
+//SetScale sets the scale of the menu, 1 = full size, 0.5 = half size
+func (m *ListMenu) SetScale(scale float64) {
+	*m.Scale = scale
+}
+
 //Draw draws the list menu to the screen
 func (m *ListMenu) Draw(screen *ebiten.Image) {
 
 	opts := &ebiten.DrawImageOptions{}
 	opts.GeoM.Translate(m.Tx, m.Ty)
-	// To Do: use scaling for different display resolutions
-	//opts.GeoM.Scale(1, 1) 
+
+	opts.GeoM.Scale(*m.Scale, *m.Scale)
+
+	scaledOffx := m.Offx * *m.Scale
+	scaledOffy := m.Offy * *m.Scale
 
 	for index, item := range m.Items {
 
 		if index == *m.SelectedIndex {
 			item.image.Fill(item.SelBgColour)
 
-			
 		} else {
 			item.image.Fill(item.BgColour)
 		}
@@ -220,6 +230,6 @@ func (m *ListMenu) Draw(screen *ebiten.Image) {
 		}
 
 		screen.DrawImage(item.image, opts)
-		opts.GeoM.Translate(m.Offx, m.Offy)
+		opts.GeoM.Translate(scaledOffx, scaledOffy)
 	}
 }

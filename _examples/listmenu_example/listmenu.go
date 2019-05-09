@@ -68,7 +68,7 @@ func main() {
 
 	menuInput := lm.Input{
 		Width:              140,
-		Height:             36,
+		ItemHeight:         36,
 		Tx:                 24,
 		Ty:                 24,
 		Offy:               40,
