@@ -3,5 +3,6 @@
 
 *.exe
 _examples/charmenu_example/charmenu_example
+_examples/*_example/*_example
 
 
