@@ -3,6 +3,7 @@
 
 *.exe
 _examples/charmenu_example/charmenu_example
-_examples/*_example/*_example
+_examples/imagemenu_example/imagemenu_example
+_examples/listmenu_example/listmenu_example
 
 
