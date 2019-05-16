@@ -1,0 +1,7 @@
+# Compiled Source #
+###################
+
+*.exe
+/_examples/*_example/*_example
+
+

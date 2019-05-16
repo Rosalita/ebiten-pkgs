@@ -16,12 +16,6 @@ var (
 
 func update(screen *ebiten.Image) error {
 
-	screen.Fill(color.NRGBA{0x00, 0x00, 0x00, 0xff})
-
-	ebitenutil.DebugPrint(screen, "Image Menu - use left and right arrow keys")
-
-	imgMenu.Draw(screen)
-
 	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
 		imgMenu.IncrementSelected()
 	}
@@ -29,6 +23,13 @@ func update(screen *ebiten.Image) error {
 		imgMenu.DecrementSelected()
 	}
 
+	if ebiten.IsDrawingSkipped() {
+		return nil
+	}
+
+	screen.Fill(color.NRGBA{0x00, 0x00, 0x00, 0xff})
+	ebitenutil.DebugPrint(screen, "Image Menu - use left and right arrow keys")
+	imgMenu.Draw(screen)
 	return nil
 }
 
@@ -55,7 +56,7 @@ func main() {
 
 	imgMenu, _ = im.NewMenu(menuInput)
 
-	if err := ebiten.Run(update, 320, 240, 2, "Image menu"); err != nil {
+	if err := ebiten.Run(update, 320, 240, 1, "Image menu"); err != nil {
 		panic(err)
 	}
 }
