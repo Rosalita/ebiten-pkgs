@@ -2,6 +2,6 @@
 ###################
 
 *.exe
-/_examples/*_example/*_example
+_examples/charmenu_example/charmenu_example
 
 
